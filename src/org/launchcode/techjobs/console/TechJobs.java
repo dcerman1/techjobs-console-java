@@ -1,8 +1,6 @@
 package org.launchcode.techjobs.console;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * Created by LaunchCode
@@ -42,7 +40,7 @@ public class TechJobs {
                 } else {
 
                     ArrayList<String> results = JobData.findAll(columnChoice);
-
+                    Collections.sort(results);
                     System.out.println("\n*** All " + columnChoices.get(columnChoice) + " Values ***");
 
                     // Print list of skills, employers, etc
@@ -61,8 +59,14 @@ public class TechJobs {
                 String searchTerm = in.nextLine();
 
                 if (searchField.equals("all")) {
-                    System.out.println("Search all fields not yet implemented.");
-                } else {
+                    // Enter the findByValue method here
+                    JobData.findByValue(searchTerm);
+
+                } // determine whether the search term is contained in job data
+                 else if (JobData.findAll().contains(searchTerm) == false) {
+                     System.out.println("Your search did not return any results.");
+                 }
+                 else {
                     printJobs(JobData.findByColumnAndValue(searchField, searchTerm));
                 }
             }
@@ -110,7 +114,13 @@ public class TechJobs {
 
     // Print a list of jobs
     private static void printJobs(ArrayList<HashMap<String, String>> someJobs) {
+        for (HashMap<String,String> aJob : someJobs)
+        {   System.out.println("* * * * *");
+            for ( String i : aJob.keySet()) {
+            System.out.println(i + ": " + aJob.get(i));
+        }
+            System.out.println("* * * * * \n");
 
-        System.out.println("printJobs is not implemented yet");
-    }
+    }}
 }
+

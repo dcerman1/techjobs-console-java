@@ -8,6 +8,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
@@ -50,8 +51,8 @@ public class JobData {
 
         // load data, if not already loaded
         loadData();
-
-        return allJobs;
+        ArrayList <HashMap<String, String>> allJobs2 = (ArrayList<HashMap<String, String>>) allJobs.clone();
+        return allJobs2;
     }
 
     /**
@@ -84,9 +85,26 @@ public class JobData {
         return jobs;
     }
 
-    /**
-     * Read in data from a CSV file and store it in a list
-     */
+    public static String findByValue(String searchTerm) {
+        //search for a string within each column
+        loadData();
+
+        for (HashMap<String,String> ajob : allJobs) {
+            for ( String i : ajob.keySet()) {
+                String aValue = ajob.get(i);
+                //(aValue.contains(searchTerm)) {
+                if (aValue.compareToIgnoreCase(searchTerm) == 0) {
+                    System.out.println("* * * * *");
+                    for (String value : ajob.keySet()) {
+                        System.out.println(value + ": " + ajob.get(value));
+                    }
+                    System.out.println("* * * * * \n");
+                }
+            }
+        }
+        return "not working";
+    }
+
     private static void loadData() {
 
         // Only load data once
